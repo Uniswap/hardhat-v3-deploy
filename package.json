@@ -1,8 +1,8 @@
 {
-  "name": "uniswap-v3-deploy-plugin",
+  "name": "hardhat-v3-deploy",
   "version": "0.1.0",
   "description": "Hardhat plugin for Uniswap V3 deployment",
-  "repository": "github:omarish/uniswap-v3-deploy-plugin",
+  "repository": "github:Uniswap/hardhat-v3-deploy",
   "author": "Omar Bohsali",
   "license": "MIT",
   "main": "dist/index.js",
