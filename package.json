@@ -1,5 +1,5 @@
 {
-  "name": "hardhat-v3-deploy",
+  "name": "@uniswap/hardhat-v3-deploy",
   "version": "0.1.0",
   "description": "Hardhat plugin for Uniswap V3 deployment",
   "repository": "github:Uniswap/hardhat-v3-deploy",
