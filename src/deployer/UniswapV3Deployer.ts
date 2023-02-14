@@ -98,7 +98,7 @@ export class UniswapV3Deployer {
             NFTDescriptor: [
               {
                 length: 20,
-                start: 1261,
+                start: 1681,  // old value is 1261
               },
             ],
           },
@@ -112,7 +112,8 @@ export class UniswapV3Deployer {
     return (await this.deployContract(
       artifacts.NonfungibleTokenPositionDescriptor.abi,
       linkedBytecode,
-      [weth9Address],
+      // 'ETH' as a bytes32 string
+      [weth9Address, '0x4554480000000000000000000000000000000000000000000000000000000000'],
       this.deployer
     )) as Contract;
   }
