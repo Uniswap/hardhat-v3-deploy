@@ -20,7 +20,7 @@ Or if you are using TypeScript, in your `hardhat.config.ts`:
 import "@justin-gee/uniswap-tokamak-hardhat-v3-deploy";
 ```
 
-Now, run `npm run hardhat` and you should see:
+Now, run `npx hardhat` and you should see:
 
 ```
 AVAILABLE TASKS:
@@ -35,7 +35,7 @@ AVAILABLE TASKS:
 Great! Now, to deploy the contracts:
 
 ```sh
-$ npm run hardhat justin-gee-deploy-uniswap
+$ npx hardhat justin-gee-deploy-uniswap
 ```
 
 And you're done. Time to build something great.
