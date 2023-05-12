@@ -27,7 +27,7 @@ AVAILABLE TASKS:
 
   accounts      	Prints the list of accounts
   ...
-  justin-gee-deploy-uniswap	Deploys Uniswap V3 contracts
+  tokamak-uniswap-v3-deploy	Deploys Uniswap V3 contracts
   ...
   test          	Runs mocha tests
 ```
@@ -35,7 +35,7 @@ AVAILABLE TASKS:
 Great! Now, to deploy the contracts:
 
 ```sh
-$ npx hardhat justin-gee-deploy-uniswap
+$ npx hardhat tokamak-uniswap-v3-deploy
 ```
 
 And you're done. Time to build something great.
