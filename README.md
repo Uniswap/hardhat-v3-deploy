@@ -32,10 +32,16 @@ AVAILABLE TASKS:
   test          	Runs mocha tests
 ```
 
-Great! Now, to deploy the contracts:
+Great! Now, to deploy the contracts locally:
 
 ```sh
 $ npx hardhat tokamak-uniswap-v3-deploy
+```
+
+After setting network to tokamakgoerli, deploy to tokamakgoerli
+
+```sh
+$ npx hardhat tokamak-uniswap-v3-deploy --network tokamakgoerli
 ```
 
 And you're done. Time to build something great.
