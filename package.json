@@ -1,8 +1,8 @@
 {
-  "name": "@justin-gee/uniswap-tokamak-hardhat-v3-deploy",
-  "version": "1.0.7",
+  "name": "@tokamak-network/tokamak-uniswap-v3-deploy",
+  "version": "1.0.1",
   "description": "Hardhat plugin for Uniswap V3 solc ver 0.8 deployment",
-  "organization": "justin-gee",
+  "organization": "tokamak-network",
   "repository": "github:usgeeus/justin-gee-hardhat-v3-deploy",
   "author": "EuiSin(Justin) Gee",
   "license": "MIT",
