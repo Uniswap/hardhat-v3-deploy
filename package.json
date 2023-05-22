@@ -3,7 +3,7 @@
   "version": "1.0.2",
   "description": "Hardhat plugin for Uniswap V3 solc ver 0.8 deployment",
   "organization": "tokamak-network",
-  "repository": "github:usgeeus/justin-gee-hardhat-v3-deploy",
+  "repository": "github:tokamak-network/tokamak-uniswap-v3-deploy",
   "author": "EuiSin(Justin) Gee",
   "license": "MIT",
   "main": "dist/index.js",

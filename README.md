@@ -1,4 +1,4 @@
-# @uniswap/hardhat-v3-deploy
+# @tokamak-network/tokamak-uniswap-v3-deploy
 
 Deploy Uniswap V3 contracts in development.
 
@@ -38,14 +38,13 @@ Great! Now, to deploy the contracts locally:
 $ npx hardhat tokamak-uniswap-v3-deploy
 ```
 
-After setting network to tokamakgoerli, deploy to tokamakgoerli
+After setting network to tokamak, deploy to tokamak
 
 ```sh
-$ npx hardhat tokamak-uniswap-v3-deploy --network tokamakgoerli
+$ npx hardhat tokamak-uniswap-v3-deploy --network tokamak
 ```
 
 And you're done. Time to build something great.
 
-## Plugin Development
-
-TODO
+## Total Gas Used
+30,413,266
