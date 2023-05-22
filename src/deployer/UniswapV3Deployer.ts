@@ -56,19 +56,19 @@ export class UniswapV3Deployer {
   
 
     return {
-      factory,
-      router,
-      nftDescriptorLibrary,
-      positionDescriptor,
-      positionManager,
-      quoter,
-      quoterV2,
-      tickLens,
-      uniswapInterfaceMulticall,
-      bancorConverterRegistry,
-      swapRouter02,
-      uniswapV3PoolSwapTest,
-      multicall
+      UniswapV3Factory: factory,
+      SwapRouter: router,
+      NFTDescriptor :nftDescriptorLibrary,
+      NonfungibleTokenPositionDescriptor : positionDescriptor,
+      NonfungiblePositionManager: positionManager,
+      Quoter: quoter,
+      QuoterV2: quoterV2,
+      TickLens: tickLens,
+      UniswapInterfaceMulticall: uniswapInterfaceMulticall,
+      BancorConverterRegistry: bancorConverterRegistry,
+      SwapRouter02: swapRouter02,
+      UniswapV3PoolSwapTest: uniswapV3PoolSwapTest,
+      Multicall: multicall
     };
   }
 
