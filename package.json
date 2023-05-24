@@ -1,6 +1,6 @@
 {
   "name": "@tokamak-network/tokamak-uniswap-v3-deploy",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Hardhat plugin for Uniswap V3 solc ver 0.8 deployment",
   "organization": "tokamak-network",
   "repository": "github:tokamak-network/tokamak-uniswap-v3-deploy",

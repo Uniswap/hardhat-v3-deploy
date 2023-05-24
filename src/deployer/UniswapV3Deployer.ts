@@ -2,6 +2,7 @@ import { Signer, Contract, ContractFactory, utils } from "ethers";
 import { linkLibraries } from "../util/linkLibraries";
 
 type ContractJson = { abi: any; bytecode: string };
+type Args = { w9: string, ncl: string };
 const artifacts: { [name: string]: ContractJson } = {
   UniswapV3Factory: require("@uniswap/v3-core/artifacts/contracts/UniswapV3Factory.sol/UniswapV3Factory.json"),
   SwapRouter: require("../abis/SwapRouter.sol/SwapRouter.json"),
@@ -23,16 +24,19 @@ const artifacts: { [name: string]: ContractJson } = {
 // type IUniswapV3Factory = Contract;
 
 export class UniswapV3Deployer {
-  static async deploy(actor: Signer): Promise<{ [name: string]: Contract }> {
+  static async deploy(args:Args, actor: Signer): Promise<{ [name: string]: Contract }> {
     const deployer = new UniswapV3Deployer(actor);
-    const WETH9Address = '0x4200000000000000000000000000000000000006';
+    const {w9: WETH9Address, ncl: nativeCurrencyLabel} = args;
+    console.log("WETH9Address", WETH9Address);
+    console.log("nativeCurrencyLabel", nativeCurrencyLabel);
     const factoryV2Address = "0x0000000000000000000000000000000000000000";
     const factory = await deployer.deployFactory();
     const router = await deployer.deployRouter(factory.address, WETH9Address);
     const nftDescriptorLibrary = await deployer.deployNFTDescriptorLibrary();
     const positionDescriptor = await deployer.deployPositionDescriptor(
       nftDescriptorLibrary.address,
-      WETH9Address
+      WETH9Address,
+      nativeCurrencyLabel
     );
     const positionManager = await deployer.deployNonfungiblePositionManager(
       factory.address,
@@ -198,7 +202,8 @@ export class UniswapV3Deployer {
 
   async deployPositionDescriptor(
     nftDescriptorLibraryAddress: string,
-    weth9Address: string
+    weth9Address: string,
+    nativeCurrencyLabel:string,
   ) {
     const linkedBytecode = linkLibraries(
       {
@@ -218,7 +223,7 @@ export class UniswapV3Deployer {
         NFTDescriptor: nftDescriptorLibraryAddress,
       }
     );
-    const nativeCurrencyLabelBytes = await utils.keccak256(utils.toUtf8Bytes("TON"));
+    const nativeCurrencyLabelBytes = await utils.keccak256(utils.toUtf8Bytes(nativeCurrencyLabel));
     return (await this.deployContract(
       artifacts.NonfungibleTokenPositionDescriptor.abi,
       linkedBytecode,
