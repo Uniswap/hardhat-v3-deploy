@@ -1,14 +1,19 @@
 import { task, types } from "hardhat/config";
 import "@nomiclabs/hardhat-ethers";
 import "./type-extensions";
-import {save} from "./util/save_deployed";
+import { save } from "./util/save_deployed";
 import Table from "cli-table3";
 import { UniswapV3Deployer } from "./deployer/UniswapV3Deployer";
 
-type Args = { w9: string, ncl: string };
+type Args = { w9: string; ncl: string };
 task("tokamak-uniswap-v3-deploy", "Deploys Uniswap V3 contracts")
-  .addOptionalParam("w9", "WETH9 Address","0x4200000000000000000000000000000000000006", types.string)
-  .addOptionalParam("ncl", "nativeCurrencyLabel","ETH", types.string)
+  .addOptionalParam(
+    "w9",
+    "WETH9 Address",
+    "0x4200000000000000000000000000000000000006",
+    types.string
+  )
+  .addOptionalParam("ncl", "nativeCurrencyLabel", "ETH", types.string)
   .setAction(async (args, hre) => {
     const [actor] = await hre.ethers.getSigners();
     const networkName = hre.network.name;

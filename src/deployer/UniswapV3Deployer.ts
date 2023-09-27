@@ -2,21 +2,21 @@ import { Signer, Contract, ContractFactory, utils } from "ethers";
 import { linkLibraries } from "../util/linkLibraries";
 
 type ContractJson = { abi: any; bytecode: string };
-type Args = { w9: string, ncl: string };
+type Args = { w9: string; ncl: string };
 const artifacts: { [name: string]: ContractJson } = {
   UniswapV3Factory: require("@uniswap/v3-core/artifacts/contracts/UniswapV3Factory.sol/UniswapV3Factory.json"),
-  SwapRouter: require("../abis/SwapRouter.sol/SwapRouter.json"),
-  NFTDescriptor: require("../abis/NFTDescriptor.sol/NFTDescriptor.json"),
-  NonfungibleTokenPositionDescriptor: require("../abis/NonfungibleTokenPositionDescriptor.sol/NonfungibleTokenPositionDescriptor.json"),
-  NonfungiblePositionManager: require("../abis/NonfungiblePositionManager.sol/NonfungiblePositionManager.json"),
-  Quoter :require("../abis/Quoter.sol/Quoter.json"),
-  QuoterV2 : require("../abis/QuoterV2.sol/QuoterV2.json"),
-  TickLens : require("../abis/TickLens.sol/TickLens.json"),
-  UniswapInterfaceMulticall : require("../abis/UniswapInterfaceMulticall.sol/UniswapInterfaceMulticall.json"),
-  BancorConverterRegistry : require("../abis/BancorConverterRegistry.sol/BancorConverterRegistry.json"),
-  SwapRouter02 : require("../abis/SwapRouter02.sol/SwapRouter02.json"),
-  UniswapV3PoolSwapTest : require("../abis/UniswapV3PoolSwapTest.sol/UniswapV3PoolSwapTest.json"),
-  Multicall : require("../abis/Multicall.sol/Multicall.json")
+  SwapRouter: require("@uniswap/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json"),
+  NFTDescriptor: require("@uniswap/v3-periphery/artifacts/contracts/libraries/NFTDescriptor.sol/NFTDescriptor.json"),
+  NonfungibleTokenPositionDescriptor: require("@uniswap/v3-periphery/artifacts/contracts/NonfungibleTokenPositionDescriptor.sol/NonfungibleTokenPositionDescriptor.json"),
+  NonfungiblePositionManager: require("@uniswap/v3-periphery/artifacts/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json"),
+  Quoter: require("@uniswap/v3-periphery/artifacts/contracts/libraries/Quoter.sol/Quoter.json"),
+  QuoterV2: require("@uniswap/v3-periphery/artifacts/contracts/libraries/QuoterV2.sol/QuoterV2.json"),
+  TickLens: require("@uniswap/v3-periphery/artifacts/contracts/libraries/TickLens.sol/TickLens.json"),
+  UniswapInterfaceMulticall: require("@uniswap/v3-periphery/artifacts/contracts/libraries/UniswapInterfaceMulticall.sol/UniswapInterfaceMulticall.json"),
+  SwapRouter02: require("@uniswap/swap-router-contracts/artifacts/contracts/SwapRouter02.sol/SwapRouter02.json"),
+  UniswapV3PoolSwapTest: require("../abis/UniswapV3PoolSwapTest.sol/UniswapV3PoolSwapTest.json"), //from v3-core/contracts/test
+  BancorConverterRegistry: require("../abis/BancorConverterRegistry.sol/BancorConverterRegistry.json"),
+  Multicall2: require("../abis/Multicall2.sol/Multicall2.json"),
 };
 
 // TODO: Should replace these with the proper typechain output.
@@ -24,9 +24,12 @@ const artifacts: { [name: string]: ContractJson } = {
 // type IUniswapV3Factory = Contract;
 
 export class UniswapV3Deployer {
-  static async deploy(args:Args, actor: Signer): Promise<{ [name: string]: Contract }> {
+  static async deploy(
+    args: Args,
+    actor: Signer
+  ): Promise<{ [name: string]: Contract }> {
     const deployer = new UniswapV3Deployer(actor);
-    const {w9: WETH9Address, ncl: nativeCurrencyLabel} = args;
+    const { w9: WETH9Address, ncl: nativeCurrencyLabel } = args;
     console.log("WETH9Address", WETH9Address);
     console.log("nativeCurrencyLabel", nativeCurrencyLabel);
     const factoryV2Address = "0x0000000000000000000000000000000000000000";
@@ -45,7 +48,10 @@ export class UniswapV3Deployer {
     );
     //Quoter, QuoterV2, TickLens,UniswapInterfaceMulticall
     const quoter = await deployer.deployQuoter(factory.address, WETH9Address);
-    const quoterV2 = await deployer.deployQuoterV2(factory.address, WETH9Address);
+    const quoterV2 = await deployer.deployQuoterV2(
+      factory.address,
+      WETH9Address
+    );
     const tickLens = await deployer.deployTickLens();
     const uniswapInterfaceMulticall = await deployer.deployUniswapInterfaceMulticall();
     const bancorConverterRegistry = await deployer.deployBancorConverterRegistry();
@@ -57,13 +63,12 @@ export class UniswapV3Deployer {
     );
     const uniswapV3PoolSwapTest = await deployer.deployUniswapV3PoolSwapTest();
     const multicall = await deployer.deployMulticall();
-  
 
     return {
       UniswapV3Factory: factory,
       SwapRouter: router,
-      NFTDescriptor :nftDescriptorLibrary,
-      NonfungibleTokenPositionDescriptor : positionDescriptor,
+      NFTDescriptor: nftDescriptorLibrary,
+      NonfungibleTokenPositionDescriptor: positionDescriptor,
       NonfungiblePositionManager: positionManager,
       Quoter: quoter,
       QuoterV2: quoterV2,
@@ -72,7 +77,7 @@ export class UniswapV3Deployer {
       BancorConverterRegistry: bancorConverterRegistry,
       SwapRouter02: swapRouter02,
       UniswapV3PoolSwapTest: uniswapV3PoolSwapTest,
-      Multicall: multicall
+      Multicall: multicall,
     };
   }
 
@@ -82,7 +87,7 @@ export class UniswapV3Deployer {
     this.deployer = deployer;
   }
 
-  async deployMulticall(){
+  async deployMulticall() {
     return await this.deployContract<Contract>(
       artifacts.Multicall.abi,
       artifacts.Multicall.bytecode,
@@ -91,7 +96,7 @@ export class UniswapV3Deployer {
     );
   }
 
-  async deployUniswapV3PoolSwapTest(){
+  async deployUniswapV3PoolSwapTest() {
     return await this.deployContract<Contract>(
       artifacts.UniswapV3PoolSwapTest.abi,
       artifacts.UniswapV3PoolSwapTest.bytecode,
@@ -105,11 +110,16 @@ export class UniswapV3Deployer {
     factoryV3Address: string,
     positionManagerAddress: string,
     weth9Address: string
-  ){
+  ) {
     return await this.deployContract<Contract>(
       artifacts.SwapRouter02.abi,
       artifacts.SwapRouter02.bytecode,
-      [factoryV2Address, factoryV3Address, positionManagerAddress, weth9Address],
+      [
+        factoryV2Address,
+        factoryV3Address,
+        positionManagerAddress,
+        weth9Address,
+      ],
       this.deployer
     );
   }
@@ -123,9 +133,7 @@ export class UniswapV3Deployer {
     );
   }
 
-  async deployQuoter(
-    factoryAddress: string,
-    weth9Address: string) {
+  async deployQuoter(factoryAddress: string, weth9Address: string) {
     return await this.deployContract<Contract>(
       artifacts.Quoter.abi,
       artifacts.Quoter.bytecode,
@@ -134,7 +142,7 @@ export class UniswapV3Deployer {
     );
   }
 
-  async deployTickLens(){
+  async deployTickLens() {
     return await this.deployContract<Contract>(
       artifacts.TickLens.abi,
       artifacts.TickLens.bytecode,
@@ -143,7 +151,7 @@ export class UniswapV3Deployer {
     );
   }
 
-  async deployUniswapInterfaceMulticall(){
+  async deployUniswapInterfaceMulticall() {
     return await this.deployContract<Contract>(
       artifacts.UniswapInterfaceMulticall.abi,
       artifacts.UniswapInterfaceMulticall.bytecode,
@@ -152,9 +160,7 @@ export class UniswapV3Deployer {
     );
   }
 
-  async deployQuoterV2(
-    factoryAddress: string,
-    weth9Address: string) {
+  async deployQuoterV2(factoryAddress: string, weth9Address: string) {
     return await this.deployContract<Contract>(
       artifacts.QuoterV2.abi,
       artifacts.QuoterV2.bytecode,
@@ -162,7 +168,6 @@ export class UniswapV3Deployer {
       this.deployer
     );
   }
-
 
   async deployFactory() {
     return await this.deployContract<Contract>(
@@ -203,7 +208,7 @@ export class UniswapV3Deployer {
   async deployPositionDescriptor(
     nftDescriptorLibraryAddress: string,
     weth9Address: string,
-    nativeCurrencyLabel:string,
+    nativeCurrencyLabel: string
   ) {
     const linkedBytecode = linkLibraries(
       {
@@ -213,7 +218,7 @@ export class UniswapV3Deployer {
             NFTDescriptor: [
               {
                 length: 20,
-                start: 1577,
+                start: 1681,
               },
             ],
           },
@@ -223,7 +228,9 @@ export class UniswapV3Deployer {
         NFTDescriptor: nftDescriptorLibraryAddress,
       }
     );
-    const nativeCurrencyLabelBytes = await utils.keccak256(utils.toUtf8Bytes(nativeCurrencyLabel));
+    const nativeCurrencyLabelBytes = await utils.keccak256(
+      utils.toUtf8Bytes(nativeCurrencyLabel)
+    );
     return (await this.deployContract(
       artifacts.NonfungibleTokenPositionDescriptor.abi,
       linkedBytecode,
