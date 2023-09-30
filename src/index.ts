@@ -17,6 +17,7 @@ task("tokamak-uniswap-v3-deploy", "Deploys Uniswap V3 contracts")
   .setAction(async (args, hre) => {
     const [actor] = await hre.ethers.getSigners();
     const networkName = hre.network.name;
+    console.log("deployer address:", actor.address);
     const deployResults = await UniswapV3Deployer.deployUniswap(
       args as Args,
       actor,
